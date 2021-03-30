@@ -1,0 +1,237 @@
+
+reinit
+set display color white
+c
+open /homes/metofac/carton/classes/aosc617/atmosphere/count.ctl
+set t 1 492
+count2 = count
+close 1
+open /homes/metofac/carton/classes/aosc617/atmosphere/djf.ctl
+set t 1 492
+djf2 = djf
+close 1
+open /homes/metofac/carton/classes/aosc617/atmosphere/jja.ctl
+set t 1 492
+jja2 = jja
+close 1
+open /homes/metofac/carton/classes/aosc617/atmosphere/tavgM_2d_slv_Nx.ctl
+/homes/metofac/carton/colors
+
+
+merra2djfu250=tregr(count2*djf2,u250,t=1,t=492)*120
+merra2djfu500=tregr(count2*djf2,u500,t=1,t=492)*120
+merra2djfu850=tregr(count2*djf2,u850,t=1,t=492)*120
+
+merra2jjau250=tregr(count2*jja2,u250,t=1,t=492)*120
+merra2jjau500=tregr(count2*jja2,u500,t=1,t=492)*120
+merra2jjau850=tregr(count2*jja2,u850,t=1,t=492)*120
+
+
+merra2djfv250=tregr(count2*djf2,v250,t=1,t=492)*120
+merra2djfv500=tregr(count2*djf2,v500,t=1,t=492)*120
+merra2djfv850=tregr(count2*djf2,v850,t=1,t=492)*120
+
+merra2jjav250=tregr(count2*jja2,v250,t=1,t=492)*120
+merra2jjav500=tregr(count2*jja2,v500,t=1,t=492)*120
+merra2jjav850=tregr(count2*jja2,v850,t=1,t=492)*120
+
+close 1
+
+open /export/aosc/horse/carton/atmosphere2/ERA5.1980-2020_mo.ctl
+/homes/metofac/carton/colors
+
+
+set lev 250 250
+era5djfu250=lterp(tregr(count2*djf2,u,t=1,t=492)*120,merra2djfu250)
+set lev 500 500
+era5djfu500=lterp(tregr(count2*djf2,u,t=1,t=492)*120,merra2djfu250)
+set lev 850 850
+era5djfu850=lterp(tregr(count2*djf2,u,t=1,t=492)*120,merra2djfu250)
+
+set lev 250 250
+era5jjau250=lterp(tregr(count2*jja2,u,t=1,t=492)*120,merra2djfu250)
+set lev 500 500
+era5jjau500=lterp(tregr(count2*jja2,u,t=1,t=492)*120,merra2djfu250)
+set lev 850 850
+era5jjau850=lterp(tregr(count2*jja2,u,t=1,t=492)*120,merra2djfu250)
+
+
+set lev 250 250
+era5djfv250=lterp(tregr(count2*djf2,v,t=1,t=492)*120,merra2djfv250)
+set lev 500 500
+era5djfv500=lterp(tregr(count2*djf2,v,t=1,t=492)*120,merra2djfv250)
+set lev 850 850
+era5djfv850=lterp(tregr(count2*djf2,v,t=1,t=492)*120,merra2djfv250)
+
+set lev 250 250
+era5jjav250=lterp(tregr(count2*jja2,v,t=1,t=492)*120,merra2djfv250)
+set lev 500 500
+era5jjav500=lterp(tregr(count2*jja2,v,t=1,t=492)*120,merra2djfv250)
+set lev 850 850
+era5jjav850=lterp(tregr(count2*jja2,v,t=1,t=492)*120,merra2djfv250)
+
+c
+set t 1
+set vpage 0 4 7.5 10.5
+set clevs  -1 -.8 -.6 -.4 -.2 .2 .4 .6 .8 1
+set ccols 49 47 45 43 42 0 62 63 65 67 69
+set grads off
+set grid off
+set xlopts 1 3 .14
+set ylopts 1 3 .14
+set gxout shaded
+set lev 250 250
+d merra2djfu250-era5djfu250
+draw title U250
+set vpage 0 4 5 8
+set clevs -1 -.8 -.6 -.4 -.2 .2 .4 .6 .8 1
+set ccols 49 47 45 43 42 0 62 63 65 67 69
+set grads off
+set grid off
+set xlopts 1 3 .14
+set ylopts 1 3 .14
+set gxout shaded
+d merra2djfu500-era5djfu500
+draw title U500
+set vpage 0 4 2.5 5.5
+set clevs -1 -.8 -.6 -.4 -.2 .2 .4 .6 .8 1
+set ccols 49 47 45 43 42 0 62 63 65 67 69
+set gxout shaded
+set grads off
+set grid off
+set xlopts 1 3 .14
+set ylopts 1 3 .14
+d merra2djfu850-era5djfu850
+
+draw title U850
+
+set t 1
+set vpage 4 8 7.5 10.5
+set clevs  -1 -.8 -.6 -.4 -.2 .2 .4 .6 .8 1
+set ccols 49 47 45 43 42 0 62 63 65 67 69
+set grads off
+set grid off
+set xlopts 1 3 .14
+set ylopts 1 3 .14
+set gxout shaded
+d merra2jjau250-era5jjau250
+draw title U250
+set vpage 4 8 5 8
+set clevs -1 -.8 -.6 -.4 -.2 .2 .4 .6 .8 1
+set ccols 49 47 45 43 42 0 62 63 65 67 69
+set grads off
+set grid off
+set xlopts 1 3 .14
+set ylopts 1 3 .14
+set gxout shaded
+d merra2jjau500-era5jjau500
+draw title U500
+set vpage 4 8 2.5 5.5
+set clevs -1 -.8 -.6 -.4 -.2 .2 .4 .6 .8 1
+set ccols 49 47 45 43 42 0 62 63 65 67 69
+set gxout shaded
+set grads off
+set grid off
+set xlopts 1 3 .14
+set ylopts 1 3 .14
+d merra2jjau850-era5jjau850
+draw title U850
+
+
+
+/aosc/doldrums/bherzog/atmosphere/cbarn
+set vpage off
+set strsiz .07
+set string 1 l 4 0
+draw string 7.62537 0.101852 (m/s)/10yr
+set strsiz .12
+set string 1 c 4 0
+draw string 2 10.5 DIFF DJF U TREND 1980-2020
+draw string 6 10.5 DIFF JJA U TREND 1980-2020
+gxprint /aosc/doldrums/bherzog/era5_zonalvel_diff.pdf
+
+
+
+
+
+
+
+c
+set t 1
+set vpage 0 4 7.5 10.5
+set clevs  -1 -.8 -.6 -.4 -.2 .2 .4 .6 .8 1
+set ccols 49 47 45 43 42 0 62 63 65 67 69
+set grads off
+set grid off
+set xlopts 1 3 .14
+set ylopts 1 3 .14
+set gxout shaded
+set lev 250 250
+d merra2djfv250-era5djfv250
+draw title V250
+set vpage 0 4 5 8
+set clevs -1 -.8 -.6 -.4 -.2 .2 .4 .6 .8 1
+set ccols 49 47 45 43 42 0 62 63 65 67 69
+set grads off
+set grid off
+set xlopts 1 3 .14
+set ylopts 1 3 .14
+set gxout shaded
+d merra2djfv500-era5djfv500
+draw title V500
+set vpage 0 4 2.5 5.5
+set clevs -1 -.8 -.6 -.4 -.2 .2 .4 .6 .8 1
+set ccols 49 47 45 43 42 0 62 63 65 67 69
+set gxout shaded
+set grads off
+set grid off
+set xlopts 1 3 .14
+set ylopts 1 3 .14
+d merra2djfv850-era5djfv850
+
+draw title V850
+
+set t 1
+set vpage 4 8 7.5 10.5
+set clevs  -1 -.8 -.6 -.4 -.2 .2 .4 .6 .8 1
+set ccols 49 47 45 43 42 0 62 63 65 67 69
+set grads off
+set grid off
+set xlopts 1 3 .14
+set ylopts 1 3 .14
+set gxout shaded
+d merra2jjav250-era5jjav250
+draw title V250
+set vpage 4 8 5 8
+set clevs -1 -.8 -.6 -.4 -.2 .2 .4 .6 .8 1
+set ccols 49 47 45 43 42 0 62 63 65 67 69
+set grads off
+set grid off
+set xlopts 1 3 .14
+set ylopts 1 3 .14
+set gxout shaded
+d merra2jjav500-era5jjav500
+draw title V500
+set vpage 4 8 2.5 5.5
+set clevs -1 -.8 -.6 -.4 -.2 .2 .4 .6 .8 1
+set ccols 49 47 45 43 42 0 62 63 65 67 69
+set gxout shaded
+set grads off
+set grid off
+set xlopts 1 3 .14
+set ylopts 1 3 .14
+d merra2jjav850-era5jjav850
+draw title V850
+
+
+
+/aosc/doldrums/bherzog/atmosphere/cbarn
+set vpage off
+set strsiz .07
+set string 1 l 4 0
+draw string 7.62537 0.101852 (m/s)/10yr
+set strsiz .12
+set string 1 c 4 0
+draw string 2 10.5 DIFF DJF V TREND 1980-2020
+draw string 6 10.5 DIFF JJA V TREND 1980-2020
+gxprint /aosc/doldrums/bherzog/era5_meridvel_diff.pdf
