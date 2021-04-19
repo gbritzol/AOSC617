@@ -8,7 +8,7 @@ library(xts)
 library(seastests)
 library(forecast)
 
-mydata <- read.xlsx(	"/homes/metogra/gbritzol/AOSC617Project/TimeSeriesAnalysis/polar-cap-temp-trend.xlsx",
+mydata <- read.xlsx(	"./polar-cap-temp-trend.xlsx",
 			"T2m 70-90N trend",
 			header=FALSE,
 			rowIndex = 1:42, colIndex = 2:13)
